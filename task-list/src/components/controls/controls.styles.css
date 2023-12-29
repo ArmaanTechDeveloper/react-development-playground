@@ -1,0 +1,45 @@
+.controls,
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls {
+    padding: 18px 25px;
+    border-bottom: 1px solid #ccc;
+}
+
+.filters span {
+    margin: 0 8px;
+    font-size: 17px;
+    color: #444444;
+    cursor: pointer;
+}
+
+.filters span:first-child {
+    margin-left: 0;
+}
+
+.active {
+    color: #e5303e !important;
+}
+.clear-btn {
+    border: none;
+    opacity: 0.6;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 7px 13px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    pointer-events: none;
+    transition: transform 0.25s ease;
+    background: #e5303e;
+}
+
+.clear-btn {
+    opacity: 0.9;
+    pointer-events: auto;
+}

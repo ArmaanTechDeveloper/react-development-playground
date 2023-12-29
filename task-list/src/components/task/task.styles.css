@@ -1,0 +1,50 @@
+.left-elements{
+    display: flex;
+    padding: 5px;
+}
+.left-elements > input {
+    margin: 0px 5px;
+    cursor: pointer;
+}
+.left-elements > p {
+    font-size: 18px;
+}
+.right-elements{
+    display: flex;
+}
+.right-elements > p {
+    padding: 5px;
+    cursor: pointer;
+}
+.strike-off{
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.336);
+}
+@media (max-width: 400px) {
+    body {
+        padding: 0 10px;
+    }
+
+    .wrapper {
+        padding: 20px 0;
+    }
+
+    .filters span {
+        margin: 0 5px;
+    }
+
+    .task-input {
+        padding: 0 20px;
+    }
+
+    .controls {
+        padding: 18px 20px;
+    }
+
+    .task-box {
+        margin-top: 20px;
+        margin-right: 5px;
+        padding: 0 15px 10px 20px;
+    }
+
+}
