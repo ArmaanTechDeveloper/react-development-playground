@@ -1,17 +1,15 @@
-import { useContext } from 'react'
 import { useSelector } from 'react-redux'
 
 import './task-box.styles.css'
-import { StatusContext } from '../../context/status.context'
 import Task from '../task/task.component'
 import { selectTasksArray } from '../../store/tasks/tasks.selector'
+import { selectStatus } from '../../store/status/status.selector'
 
 const TaskBox = () => {
     
     const tasksArray = useSelector(selectTasksArray)
-    const { status } = useContext(StatusContext)
+    const status = useSelector(selectStatus)
 
-    console.log(tasksArray)
     return (
         <ul className="task-box">
             {
