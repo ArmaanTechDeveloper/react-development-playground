@@ -1,27 +1,27 @@
-import { useContext } from 'react'
-import { StatusContext } from '../../context/status.context'
+import { useDispatch, useSelector } from 'react-redux'
+
 import './controls.styles.css'
-import { TasksContext } from '../../context/tasks.context'
-
-
+import { setTasksArray } from '../../store/tasks/tasks.slice'
+import { selectStatus } from '../../store/status/status.selector'
+import { setStatus } from '../../store/status/status.slice'
 
 const Controls = () => {
+    const dispatch = useDispatch()
 
-    const {status , setStatus} = useContext(StatusContext)
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
+    const status = useSelector(selectStatus)
     
 
     const handleAll = () => {
-        setStatus('all')
+        dispatch(setStatus('all'))
     }
     const handleActive = () => {
-        setStatus('active')
+        dispatch(setStatus('active'))
     }
     const handleCompleted = () => {
-        setStatus('completed')
+        dispatch(setStatus('completed'))
     }
     const handleClear = () => {
-        setTasksArray([])
+        dispatch(setTasksArray([]))
     }
 
     return (

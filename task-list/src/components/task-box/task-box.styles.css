@@ -2,13 +2,10 @@
     margin-top: 20px;
     margin-right: 5px;
     padding: 0 20px 10px 25px;
-}
-
-.task-box.overflow {
     overflow-y: auto;
     max-height: 300px;
-}
 
+}
 .task-box::-webkit-scrollbar {
     width: 5px;
 }

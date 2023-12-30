@@ -1,40 +1,44 @@
-import { useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './task.styles.css'
-import { TasksContext } from '../../context/tasks.context'
-import { InputContext } from '../../context/input.context'
+import { selectTasksArray } from '../../store/tasks/tasks.selector'
+import { setTasksArray } from '../../store/tasks/tasks.slice'
+import { setCurrentText } from '../../store/input/input.slice'
+import { setMode } from '../../store/input/input.slice'
+import { setEditId } from '../../store/input/input.slice'
 
 const Task = ({id , content , status}) => {
-
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
-    const { setCurrentText , setMode , setEditId} = useContext(InputContext)
+    const dispatch = useDispatch()
+    const tasksArray = useSelector(selectTasksArray)
+    
 
     const handleChange = (id) => {
-        setTasksArray(
-            tasksArray.map((task) => {
-                if(task.id === id){
-                    if(task.status === 'active') task.status = 'completed'
-                    else task.status = 'active'
-                }
-                return task
-            })
-        )
+        const newArray = tasksArray.map((task) => {
+            if (task.id === id) {
+                return {
+                    ...task,
+                    status: task.status === 'active' ? 'completed' : 'active',
+                };
+            }
+            return task;
+        });
+        dispatch(setTasksArray(newArray))
     }
 
     const handleRemove = (id) => {
-        setMode('edit')
+        dispatch(setMode('edit'))
         const filteredArray = tasksArray.filter((task) => {
             return task.id !== id
         })
-        setTasksArray(filteredArray)
+        dispatch(setTasksArray(filteredArray))
     }
 
     const handleEdit = (id) => {
         tasksArray.forEach((task) => {
             if(task.id === id) {
-                setCurrentText(task.content)
-                setEditId(id)
-                setMode('edit')
+                dispatch(setCurrentText(task.content))
+                dispatch(setEditId(id))
+                dispatch(setMode('edit'))
                 return
             }
         })

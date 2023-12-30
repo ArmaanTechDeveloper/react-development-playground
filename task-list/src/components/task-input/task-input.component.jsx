@@ -2,18 +2,27 @@ import './task-input.styles.css'
 
 import { IonIcon } from '@ionic/react';
 import { createOutline } from 'ionicons/icons';
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { TasksContext } from '../../context/tasks.context';
-import { InputContext } from '../../context/input.context';
+import { selectTasksArray } from '../../store/tasks/tasks.selector';
+import { setTasksArray } from '../../store/tasks/tasks.slice';
+import { selectCurrentText } from '../../store/input/input.selector';
+import { selectMode } from '../../store/input/input.selector';
+import { selectEditId } from '../../store/input/input.selector';
+import { setCurrentText  , setMode , setEditId} from '../../store/input/input.slice';
+
 
 const TaskInput = () => {
+
+    const dispatch = useDispatch()
     
-    const { currentText , setCurrentText , mode , setMode ,  editId , setEditId} = useContext(InputContext)
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
+    const currentText = useSelector(selectCurrentText)
+    const mode = useSelector(selectMode)
+    const editId = useSelector(selectEditId)
+    const tasksArray = useSelector(selectTasksArray)
 
     const handleChange = (e) => {
-        setCurrentText(e.target.value)
+        dispatch(setCurrentText(e.target.value))
     }
 
     const handleEnter = (e) => {
@@ -28,20 +37,23 @@ const TaskInput = () => {
                 content: currentText,
                 status: 'active'
             }
-            setTasksArray((prevState) => [...prevState , obj])
-            setCurrentText('')
+            dispatch(setTasksArray([...tasksArray , obj]))
+            dispatch(setCurrentText(''))
         }
         else if(e.key === 'Enter' && mode === 'edit') {
             const newArray = tasksArray.map((task) => {
                 if(task.id === editId) {
-                    task.content = currentText
+                    return {
+                        ...task,
+                        content: currentText
+                    }
                 }
                 return task
             })
-            setTasksArray(newArray)
-            setMode('new')
-            setCurrentText('')
-            setEditId(undefined)
+            dispatch(setTasksArray(newArray))
+            dispatch(setMode('new'))
+            dispatch(setCurrentText(''))
+            dispatch(setEditId(undefined))
         }
     }
 
