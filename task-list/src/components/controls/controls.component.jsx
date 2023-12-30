@@ -1,14 +1,15 @@
 import { useContext } from 'react'
-import { StatusContext } from '../../context/status.context'
-import './controls.styles.css'
-import { TasksContext } from '../../context/tasks.context'
+import { useDispatch } from 'react-redux'
 
+import './controls.styles.css'
+import { StatusContext } from '../../context/status.context'
+import { setTasksArray } from '../../store/tasks/tasks.slice'
 
 
 const Controls = () => {
+    const dispatch = useDispatch()
 
     const {status , setStatus} = useContext(StatusContext)
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
     
 
     const handleAll = () => {
@@ -21,7 +22,7 @@ const Controls = () => {
         setStatus('completed')
     }
     const handleClear = () => {
-        setTasksArray([])
+        dispatch(setTasksArray([]))
     }
 
     return (

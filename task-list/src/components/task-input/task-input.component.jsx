@@ -3,14 +3,18 @@ import './task-input.styles.css'
 import { IonIcon } from '@ionic/react';
 import { createOutline } from 'ionicons/icons';
 import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { TasksContext } from '../../context/tasks.context';
 import { InputContext } from '../../context/input.context';
+import { selectTasksArray } from '../../store/tasks/tasks.selector';
+import { setTasksArray } from '../../store/tasks/tasks.slice';
 
 const TaskInput = () => {
+
+    const dispatch = useDispatch()
     
     const { currentText , setCurrentText , mode , setMode ,  editId , setEditId} = useContext(InputContext)
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
+    const tasksArray = useSelector(selectTasksArray)
 
     const handleChange = (e) => {
         setCurrentText(e.target.value)
@@ -28,7 +32,7 @@ const TaskInput = () => {
                 content: currentText,
                 status: 'active'
             }
-            setTasksArray((prevState) => [...prevState , obj])
+            dispatch(setTasksArray([...tasksArray , obj]))
             setCurrentText('')
         }
         else if(e.key === 'Enter' && mode === 'edit') {
@@ -38,7 +42,7 @@ const TaskInput = () => {
                 }
                 return task
             })
-            setTasksArray(newArray)
+            dispatch(setTasksArray(newArray))
             setMode('new')
             setCurrentText('')
             setEditId(undefined)

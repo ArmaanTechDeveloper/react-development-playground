@@ -1,23 +1,26 @@
 import { useContext } from 'react'
 
 import './task.styles.css'
-import { TasksContext } from '../../context/tasks.context'
 import { InputContext } from '../../context/input.context'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectTasksArray } from '../../store/tasks/tasks.selector'
+import { setTasksArray } from '../../store/tasks/tasks.slice'
 
 const Task = ({id , content , status}) => {
-
-    const {tasksArray , setTasksArray} = useContext(TasksContext)
+    const dispatch = useDispatch()
+    const tasksArray = useSelector(selectTasksArray)
+    
     const { setCurrentText , setMode , setEditId} = useContext(InputContext)
 
     const handleChange = (id) => {
-        setTasksArray(
+        dispatch(setTasksArray(
             tasksArray.map((task) => {
                 if(task.id === id){
                     if(task.status === 'active') task.status = 'completed'
                     else task.status = 'active'
                 }
                 return task
-            })
+            }))
         )
     }
 
@@ -26,7 +29,7 @@ const Task = ({id , content , status}) => {
         const filteredArray = tasksArray.filter((task) => {
             return task.id !== id
         })
-        setTasksArray(filteredArray)
+        dispatch(setTasksArray(filteredArray))
     }
 
     const handleEdit = (id) => {
